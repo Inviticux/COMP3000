@@ -1,0 +1,35 @@
+name: FYP - Final Year Project
+services:
+  frontend:
+    image: nginx:latest
+    container_name: react-nginx
+    volumes:
+     - ./quiz-frontend/build:/usr/share/nginx/html:ro
+     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+     - "81:80"
+  
+  
+  backend:
+    image: node:20
+    container_name: backend
+    volumes:
+     - ./backend:/usr/src/app:rw
+    ports:
+     - "82:9000"
+    working_dir: /usr/src/app
+    command: sh -c "
+      chmod +x startup.sh &&
+      ./startup.sh"
+    links:
+     - database
+  
+  
+  database:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+     - "83:27017"
+    environment:
+     MONGO_INITDB_ROOT_USERNAME: root
+     MONGO_INITDB_ROOT_PASSWORD: example
