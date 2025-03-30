@@ -2,52 +2,39 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const http = require('http');
-import { error } from 'console';
-import User from '../mongo-models/Userlist.js'
 
-// Variables
+//get the routes to the requests
+const userRoutes = require('./server-routes/Userroutes');
+const moduleRoutes = require('./server-routes/Moduleroutes');
+const quizRoutes = require('./server-routes/Quizroutes');
+const attemptRoutes = require('./server-routes/Attemptroutes');
+const aiRoutes = require('./server-routes/AIroutes');
+const QuestionRoutes = require('./server-routes/Questionroutes');
+
+//variables
 const port = 9000;
 const mongoUrl = "mongodb://root:example@database:27017/people?authSource=admin";
 
-// Connect to MongoDB
+//use mongoose to connect to the mongodb instance
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('MongoDB connection error:', err));
 
-// Startup relevant services
+//start the express app
 const app = express();
 app.use(express.json());
-app.use(cors()); // Allow CORS MAKE SURE SECURE FOR DEPLOYMENT
+app.use(cors());
 
+//mount the routes with their paths
+app.use('/api/user', userRoutes);
+app.use('/api/module', moduleRoutes);
+app.use('/api/quiz', quizRoutes);
+app.use('/api/attempt', attemptRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/question', QuestionRoutes);
+
+//start the server!
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: '*', // CHANGE THIS BEFORE DEPLOYMENT
-        methods: ['GET', 'POST', 'DELETE']
-    }
-});
-
-//deal with requests / pass them off to other files
-app.post('/api/post/newuser', async (req, res) => {
-    const { email, password, isLecturer } = req.body;
-
-    if (!email || !password || !isLecturer) {
-        return res.status(406).send('406-Not Acceptable: Missing Fields Name or Password');
-    }
-
-    try {
-        const user = new User({ email, password, isLecturer })
-        await user.save();
-        res.status(201).send('201-Created: User '+email+' Created');
-        console.log('User Registered under email: '+email);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('500-Internal Server Error')
-    }
-});
-
-
-// Start the server
 server.listen(port, () => {
-    console.log(`WebSocket server running on port ${port}`);
+    console.log(`Server listening on port ${port}`);
 });

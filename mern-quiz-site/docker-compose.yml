@@ -5,10 +5,8 @@ services:
     container_name: react-nginx
     volumes:
      - ./quiz-frontend/build:/usr/share/nginx/html:ro
-     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
      - "81:80"
-  
   
   backend:
     image: node:20
@@ -23,7 +21,7 @@ services:
       ./startup.sh"
     links:
      - database
-  
+     - ollama
   
   database:
     image: mongo:latest
@@ -33,3 +31,13 @@ services:
     environment:
      MONGO_INITDB_ROOT_USERNAME: root
      MONGO_INITDB_ROOT_PASSWORD: example
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama_data:/root/.ollama
+      - ./ollama-entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]

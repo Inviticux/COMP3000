@@ -3,6 +3,8 @@
 # dependencies
 /mern-quiz-site/node_modules
 /mern-quiz-site/quiz-frontend/node_modules
+/mern-quiz-site/backend/node_modules
+/mern-quiz-site/ollama_data
 /.pnp
 .pnp.js
 
