@@ -10,8 +10,10 @@ const Dashboard = () => {
     const [userRole, setUserRole] = useState('');
     const [userName, setUserName] = useState('User');
     const [modules, setModules] = useState([]);
+    const [currentModules, setCurrentModules] = useState([]);
+    const [pastModules, setPastModules] = useState([]);
 
-    //fetch user data on page load
+    //fetch user data on page load, store the modules for processing
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -42,33 +44,43 @@ const Dashboard = () => {
             }
         };
 
+        // Split module codes and years before fetching details
         const fetchModuleDetails = async () => {
             const storedModules = JSON.parse(localStorage.getItem('userModules')) || [];
             const moduleDetails = [];
             for (let i = 0; i < storedModules.length; i++) {
-                console.log(`Fetching details for module: ${storedModules[i]}`);
+                const moduleCode = storedModules[i].slice(0, -4); // Extract module code (everything except the last 4 characters)
+                const moduleYear = storedModules[i].slice(-4); // Extract year (last 4 characters)
+                console.log(`Fetching details for module: ${moduleCode}, Year: ${moduleYear}`);
                 try {
                     const response = await fetch(`http://localhost:82/api/module/getmodule`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ moduleCode: storedModules[i] }),
+                        body: JSON.stringify({ moduleCode: `${moduleCode}`, moduleYear: `${moduleYear}` }),
                     });
 
                     if (response.ok) {
                         const moduleData = await response.json();
+                        moduleData.year = moduleYear; // Add year to module data for display
                         moduleDetails.push(moduleData);
                     } else {
-                        console.error(`Failed to fetch module ${storedModules[i]}:`, await response.text());
+                        console.error(`Failed to fetch module ${moduleCode}${moduleYear}:`, await response.text());
                     }
                 } catch (error) {
-                    console.error(`Error fetching module ${storedModules[i]}:`, error);
+                    console.error(`Error fetching module ${moduleCode}${moduleYear}:`, error);
                 }
             }
-            setModules(moduleDetails);
+
+            //assign modules based on status
+            const current = moduleDetails.filter(module => module.status !== 'Completed');
+            const past = moduleDetails.filter(module => module.status === 'Completed');
+            setCurrentModules(current);
+            setPastModules(past);
         };
 
+        //on page load fetch all relevant data
         const fetchAllData = async () => {
             await fetchUserData();
             await fetchModuleDetails();
@@ -77,24 +89,36 @@ const Dashboard = () => {
         fetchAllData();
     }, []);
 
+    //method to handle module click, send code to 
+    const handleModuleClick = (moduleCode, moduleTitle, moduleTeacher, moduleYear) => {
+        localStorage.setItem('selectedModuleCode', moduleCode);
+        localStorage.setItem('selectedModuleTitle', moduleTitle);
+        localStorage.setItem('selectedModuleTeacher', moduleTeacher);
+        localStorage.setItem('selectedModuleYear', moduleYear);
+        navigate(`/module`);
+    };
+
+    //colors for the words provided, probs should be used in the api instead of names of colours 
     const colorMap = {
         red: '#F9B9B9',
         orange: '#FBD2B1',
         yellow: '#F4ECC9',
         green: '#CBE9A7',
         blue: '#91DDD4',
+        black: '#525150',
+        purple: '#C8B6FF',
     };
 
     return (
         <div>
             <header className="header">
-                <div className="header-logo-container">
+                <div className="header-logo-container" onClick={() => navigate('/dashboard')}>
                     <img src={logo} alt="Logo" className="logo" />
                     <h4 className="logo-text">Llamalyze</h4>
                 </div>
                 <div className="header-buttons">
                     {userRole === 'lecturer' && (
-                        <button onClick={() => navigate('/lecturerview')}>Editor</button>
+                        <button onClick={() => navigate('/editor')}>Editor</button>
                     )}
                     <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                     <button onClick={() => navigate('/profile')}>Profile</button>
@@ -108,8 +132,12 @@ const Dashboard = () => {
                 <section className="dashboard-section">
                     <h3>Currently Enrolled Modules</h3>
                     <div className="dashboard-content">
-                        {modules.map((module, index) => (
-                            <div key={index} className="module-card">
+                        {currentModules.map((module, index) => (
+                            <div
+                                key={index}
+                                className="module-card"
+                                onClick={() => handleModuleClick(module.code, module.title, module.teacher, module.year)}
+                            >
                                 <div
                                     className="module-color-box"
                                     style={{ backgroundColor: colorMap[module.color] || '#FFFFFF' }}
@@ -118,7 +146,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="module-info">
                                     <h4 className="module-title">{module.title}</h4>
-                                    <p className="module-teacher">{module.teacher}</p>
+                                    <p className="module-teacher">{module.year} - {module.teacher}</p>
                                 </div>
                                 <div className="module-status">
                                     <span>{module.status}</span>
@@ -130,7 +158,29 @@ const Dashboard = () => {
 
                 <section className="dashboard-section">
                     <h3>Past Modules</h3>
-                    <div className="dashboard-content"></div>
+                    <div className="dashboard-content">
+                        {pastModules.map((module, index) => (
+                            <div
+                                key={index}
+                                className="module-card"
+                                onClick={() => handleModuleClick(module.code, module.title, module.teacher, module.year)}
+                            >
+                                <div
+                                    className="module-color-box"
+                                    style={{ backgroundColor: colorMap[module.color] || '#FFFFFF' }}
+                                >
+                                    <span className="module-code">{module.code}</span>
+                                </div>
+                                <div className="module-info">
+                                    <h4 className="module-title">{module.title}</h4>
+                                    <p className="module-teacher">{module.year} - {module.teacher}</p>
+                                </div>
+                                <div className="module-status">
+                                    <span>{module.status}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </section>
             </div>
         </div>

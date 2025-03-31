@@ -6,7 +6,8 @@ const moduleSchema = new mongoose.Schema({
     teacher: { type: String, required: true },
     code: { type: String, required: true, unique: true },
     weeks: { type: Number, required: true },
-    color: { type: String, required: true, enum: ['red', 'green', 'yellow', 'orange', 'blue'] },
+    year: { type: Number, required: true },
+    color: { type: String, required: true, enum: ['red', 'green', 'yellow', 'orange', 'blue', 'purple', 'black'] },
     status: { type: String, default: 'Waiting to Commence', enum: ['Waiting to Commence', 'Ongoing', 'Completed'] }
 });
 
