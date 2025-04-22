@@ -44,13 +44,13 @@ const Dashboard = () => {
             }
         };
 
-        // Split module codes and years before fetching details
+        //handle fetching of the module information
         const fetchModuleDetails = async () => {
             const storedModules = JSON.parse(localStorage.getItem('userModules')) || [];
             const moduleDetails = [];
             for (let i = 0; i < storedModules.length; i++) {
-                const moduleCode = storedModules[i].slice(0, -4); // Extract module code (everything except the last 4 characters)
-                const moduleYear = storedModules[i].slice(-4); // Extract year (last 4 characters)
+                const moduleCode = storedModules[i].slice(0, -4);
+                const moduleYear = storedModules[i].slice(-4);
                 console.log(`Fetching details for module: ${moduleCode}, Year: ${moduleYear}`);
                 try {
                     const response = await fetch(`http://localhost:82/api/module/getmodule`, {
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
                     if (response.ok) {
                         const moduleData = await response.json();
-                        moduleData.year = moduleYear; // Add year to module data for display
+                        moduleData.year = moduleYear;
                         moduleDetails.push(moduleData);
                     } else {
                         console.error(`Failed to fetch module ${moduleCode}${moduleYear}:`, await response.text());

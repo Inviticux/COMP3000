@@ -10,6 +10,7 @@ const quizRoutes = require('./server-routes/Quizroutes');
 const attemptRoutes = require('./server-routes/Attemptroutes');
 const aiRoutes = require('./server-routes/AIroutes');
 const QuestionRoutes = require('./server-routes/Questionroutes');
+const populateRoutes = require('./mongoosedata');
 
 //variables
 const port = 9000;
@@ -32,6 +33,7 @@ app.use('/api/quiz', quizRoutes);
 app.use('/api/attempt', attemptRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/question', QuestionRoutes);
+app.use('/api', populateRoutes);
 
 //start the server!
 const server = http.createServer(app);

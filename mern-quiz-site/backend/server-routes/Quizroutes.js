@@ -40,7 +40,7 @@ router.post('/newquiz', async (req, res) => {
 });
 
 //endpoint to get all questionIDs from a quizID
-router.get('/getquestions', async (req, res) => {
+router.post('/getquestions', async (req, res) => {
     const { quizID } = req.query;
 
     //validate required fields
@@ -92,6 +92,36 @@ router.delete('/removequestion', async (req, res) => {
 
         res.status(200).send(`200-ok: question "${questionID}" removed from quiz "${quizID}" successfully`);
         console.log(`question "${questionID}" removed from quiz "${quizID}" successfully`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('500-internal server error');
+    }
+});
+
+router.post('/getmodulequizzes', async (req, res) => {
+    const { modulecode, year } = req.body;
+
+    //validate required fields
+    if (!modulecode || !year) {
+        return res.status(406).send('406-not acceptable: missing modulecode or year');
+    }
+
+    try {
+        //find quizzes by modulecode and year
+        const quizzes = await Quizzes.find({ modulecode, year }, 'quizID quizTitle week');
+        if (quizzes.length === 0) {
+            return res.status(404).send('404-not found: no quizzes found for the given module and year');
+        }
+
+        //return the quizzes as an array
+        const quizArray = quizzes.map(quiz => ({
+            quizID: quiz.quizID,
+            title: quiz.quizTitle,
+            week: quiz.week
+        }));
+
+        res.status(200).json(quizArray);
+        console.log(`returned quizzes for module "${modulecode}" and year "${year}"`);
     } catch (error) {
         console.error(error);
         res.status(500).send('500-internal server error');

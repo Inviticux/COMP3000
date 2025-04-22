@@ -85,6 +85,65 @@ body {
 }
 
 .module-main h3 {
+    font-size: 1.5rem;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.module-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quiz-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    border-radius: 5px;
     font-size: 1.2rem;
-    font-weight: normal;
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.quiz-item:hover {
+    background-color: #F0F4FF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.quiz-item .quiz-week {
+    flex: 0.25;
+    text-align: left;
+    border-right: 2px solid rgba(0, 0, 0, 0.1);
+    padding-right: 10px;
+}
+
+.quiz-item .quiz-title {
+    text-align: center;
+    font-weight: bold;
+    flex: 1;
+}
+
+.quiz-item .quiz-score {
+    flex: 0.25;
+    text-align: right;
+    border-left: 2px solid rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+}
+
+.quiz-item.green {
+    background-color: #CBE9A7;
+}
+
+.quiz-item.red {
+    background-color: #F9B9B9;
+}
+
+.quiz-item.orange {
+    background-color: #F4ECC9;
 }

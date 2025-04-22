@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { AttemptedQuestion } = require('../mongo-models/Attempts');
+const { AttemptedQuiz } = require('../mongo-models/AttemptsQuiz');
 const { Question } = require('../mongo-models/Questions');
 
 //create a new attempt
@@ -89,6 +90,31 @@ router.get('/checkscore', async (req, res) => {
 
         res.status(200).json({ score: isCorrect });
         console.log(`score for question "${questionID}" by user "${email}": ${isCorrect}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('500-internal server error');
+    }
+});
+
+//get quiz attempts for a user using email and quizID, return the userScore
+router.post('/quizattempts', async (req, res) => {
+    const { email, quizID } = req.body;
+
+    //validate required fields
+    if (!email || !quizID) {
+        return res.status(406).send('406-not acceptable: missing email or quizID');
+    }
+
+    try {
+        //find the quiz attempt for the user and quiz
+        const quizAttempt = await AttemptedQuiz.findOne({ email, quizID });
+        if (!quizAttempt) {
+            return res.status(200).json({ userScore: "Not Attempted" });
+        }
+
+        //return the stored userScore
+        res.status(200).json({ userScore: quizAttempt.userScore });
+        console.log(`userScore for quiz "${quizID}" by user "${email}": ${quizAttempt.userScore}`);
     } catch (error) {
         console.error(error);
         res.status(500).send('500-internal server error');
