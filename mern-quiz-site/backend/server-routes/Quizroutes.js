@@ -41,7 +41,7 @@ router.post('/newquiz', async (req, res) => {
 
 //endpoint to get all questionIDs from a quizID
 router.post('/getquestions', async (req, res) => {
-    const { quizID } = req.query;
+    const { quizID } = req.body;
 
     //validate required fields
     if (!quizID) {
@@ -98,6 +98,7 @@ router.delete('/removequestion', async (req, res) => {
     }
 });
 
+//endpoint to get all quizzes for a module and year
 router.post('/getmodulequizzes', async (req, res) => {
     const { modulecode, year } = req.body;
 
@@ -122,6 +123,31 @@ router.post('/getmodulequizzes', async (req, res) => {
 
         res.status(200).json(quizArray);
         console.log(`returned quizzes for module "${modulecode}" and year "${year}"`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('500-internal server error');
+    }
+});
+
+//endpoint to get title and questionids from quizid
+router.post('/getquizdetails', async (req, res) => {
+    const { quizID } = req.body;
+
+    //validate required fields
+    if (!quizID) {
+        return res.status(406).send('406-not acceptable: missing quizID');
+    }
+
+    try {
+        //find the quiz by quizID
+        const quiz = await Quizzes.findOne({ quizID });
+        if (!quiz) {
+            return res.status(404).send('404-not found: quiz does not exist');
+        }
+
+        //return the quiz details
+        res.status(200).json({ title: quiz.quizTitle, week: quiz.week, questionIDs: quiz.quizQuestionIds });
+        console.log(`returned details for quiz "${quizID}"`);
     } catch (error) {
         console.error(error);
         res.status(500).send('500-internal server error');

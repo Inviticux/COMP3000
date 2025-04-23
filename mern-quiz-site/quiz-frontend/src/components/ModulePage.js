@@ -114,6 +114,11 @@ const ModulePage = () => {
         navigate('/quiz');
     }
 
+    const handleCompleteQuizClick = (quizID) => {
+        localStorage.setItem('selectedQuizID', quizID);
+        navigate('/review');
+    }
+
     return (
         <div>
             <header className="header">
@@ -165,7 +170,7 @@ const ModulePage = () => {
                                 <div
                                     key={quiz.quizID}
                                     className="quiz-item"
-                                    onClick={() => handleQuizClick(quiz.quizID)}
+                                    onClick={() => handleCompleteQuizClick(quiz.quizID)}
                                     style={{ backgroundColor: quiz.scoreColor, fontSize: '1rem' }}
                                     
                                 >

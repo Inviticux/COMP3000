@@ -3,6 +3,7 @@ const User = require('./mongo-models/Userlist');
 const { Module } = require('./mongo-models/Modules');
 const { Quizzes } = require('./mongo-models/Quizzes');
 const { AttemptedQuiz } = require('./mongo-models/AttemptsQuiz');
+const { Question } = require('./mongo-models/Questions');
 const express = require('express');
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post('/populate', async (req, res) => {
     await Module.deleteMany({});
     await Quizzes.deleteMany({});
     await AttemptedQuiz.deleteMany({});
+    await Question.deleteMany({});
 
     const user = await User.create({
       email: 'sop@email.com',
@@ -201,6 +203,69 @@ router.post('/populate', async (req, res) => {
         module: 'PHYS5006',
         year: '2025',
       },
+    ]);
+    
+    await Question.create([
+        {
+            questionID: 'Q1',
+            questionNumber: 1,
+            question: 'What is polymorphism in programming?',
+            answers: ['Inheritance', 'Encapsulation', 'Polymorphism', 'Abstraction'],
+            correctAnswer: 'C',
+            modulecode: 'COMP3004',
+            year: '2025',
+            week: 1,
+        },
+        {
+            questionID: 'Q2',
+            questionNumber: 2,
+            question: 'Which of the following is a valid JavaScript data type?',
+            answers: ['String', 'Integer', 'Character', 'Decimal'],
+            correctAnswer: 'A',
+            modulecode: 'COMP3004',
+            year: '2025',
+            week: 1,
+        },
+        {
+            questionID: 'Q3',
+            questionNumber: 3,
+            question: 'What does the "this" keyword refer to in JavaScript?',
+            answers: ['Global object', 'Current object', 'Parent object', 'None of the above'],
+            correctAnswer: 'B',
+            modulecode: 'COMP3004',
+            year: '2025',
+            week: 1,
+        },
+        {
+            questionID: 'Q4',
+            questionNumber: 1,
+            question: 'What is a closure in JavaScript?',
+            answers: ['A function inside another function', 'A function with access to its outer scope', 'A function that returns another function', 'None of the above'],
+            correctAnswer: 'B',
+            modulecode: 'COMP3004',
+            year: '2025',
+            week: 2,
+        },
+        {
+            questionID: 'Q5',
+            questionNumber: 2,
+            question: 'What is the purpose of the "use strict" directive in JavaScript?',
+            answers: ['Enable strict mode', 'Disable strict mode', 'Enable debugging', 'None of the above'],
+            correctAnswer: 'A',
+            modulecode: 'COMP3004',
+            year: '2025',
+            week: 2,
+        },
+        {
+            questionID: 'Q6',
+            questionNumber: 3,
+            question: 'What is the output of "typeof null" in JavaScript?',
+            answers: ['null', 'object', 'undefined', 'string'],
+            correctAnswer: 'B',
+            modulecode: 'COMP3004',
+            year: '2025',
+            week: 2,
+        },
     ]);
 
     console.log('Database seeded successfully!');

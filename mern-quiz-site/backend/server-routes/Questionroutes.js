@@ -53,8 +53,8 @@ router.post('/newquestion', async (req, res) => {
 });
 
 //endpoint to get question details for display
-router.get('/getquestion', async (req, res) => {
-    const { questionID } = req.query;
+router.post('/getquestion', async (req, res) => {
+    const { questionID } = req.body;
 
     // validate required fields
     if (!questionID) {

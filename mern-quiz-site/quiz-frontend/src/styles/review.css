@@ -130,6 +130,26 @@
     text-align: center;
 }
 
+.question-option-a {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.question-option-b {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.question-option-c {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.question-option-d {
+    border-radius: 5px;
+    padding: 5px;
+}
+
 .options-select {
     display: flex;
     flex-direction: row;
@@ -185,87 +205,27 @@
     background-color: #CBE9A7;
 }
 
-.quiz-marking {
+.quiz-feedback {
+    background-color: #525150;
+    border-radius: 10px;
+    padding: 5px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #254769;
-    border-radius: 10px;
-    padding: 0px 20px 50px 20px;
-    text-align: center;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
-    height: auto;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.quiz-marking h6 {
-    font-size: 34px;
-    color: #ffffff;
-    margin-bottom: 15px;
-    font-family: lexend;
-}
-
-.quiz-marking h7 {
-    font-size: 20px;
-    color: #C7E0FE;
-    margin-bottom: 5px;
-    font-family: lexend;
-}
-
-.quiz-marking p {
-    font-size: 18px;
-    color: #474746;
-    margin-bottom: 20px;
-    font-family: lexend;
-}
-
-.quiz-marking p2 {
-    font-size: 28px;
-    color: black;
-    font-family: lexend;
-}
-
-.timing-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 50px;
     margin-top: 20px;
 }
 
-.timing-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #C7E0FE;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.quiz-feedback h8 {
+    font-size: 30px;
+    color: #F8F8F8;
+    margin-top: 20px;
+    text-align: center;
 }
 
-.timing-item h3 {
-    font-size: 18px;
-    color: #333333;
-    margin-bottom: 10px;
-    font-family: lexend;
-}
-
-.time-item {
-    font-size: 36px;
-    color: #315E8B;
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-family: lexend;
-}
-
-.sub-time {
-    font-size: 14px;
-    color: #474746;
-    font-family: lexend;
+.quiz-feedback p3 {
+    font-size: 16px;
+    color: #F8F8F8;
+    margin-top: 20px;
+    text-align: center;
 }

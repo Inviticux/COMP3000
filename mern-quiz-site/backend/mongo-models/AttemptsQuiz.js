@@ -7,7 +7,8 @@ const attemptedQuizSchema = new mongoose.Schema({
     userScore : { type: Number, required: true },
     week: { type: Number, required: true },
     module: { type: String, required: true },
-    year: { type: String, required: true }
+    year: { type: String, required: true },
+    feedback : { type: String, default: "feedback not generated" }
 });
 
 const AttemptedQuiz = mongoose.model("AttemptedQuiz", attemptedQuizSchema);
