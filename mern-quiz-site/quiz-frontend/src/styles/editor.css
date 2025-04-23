@@ -1,0 +1,146 @@
+.editor-main {
+    background-color: #ECF2FF;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: calc(100% - 50px);
+    box-sizing: border-box;
+    color: black;
+    font-family: 'Lexend', sans-serif;
+}
+
+.editor-title {
+    text-align: center;
+}
+
+.editor-master-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px 0px 20px 0px;
+    border-radius: 10px;
+    background-color: #363434;
+}
+
+.masterbutton-container {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.masterbutton {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F4ECC9;
+    color: #363434;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.masterbutton:hover {
+    background-color: #F9B9B9;
+}
+
+.editor-treeandpreview {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.editor-tree {
+    flex: 0 0 25%;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #525150;
+}
+
+.tree-title {
+    color: #EEF0F1;
+}
+
+.tree-modulecode {
+    color: #C7E0FE;
+}
+
+.tree-item-container {
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #315E8B;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #EEF0F1;
+}
+
+.editor-preview {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #C7E0FE;
+}
+
+.editor-preview input {
+    width: 60%;
+    padding: 5px; 
+    margin-bottom: 15px;
+    height: auto;
+    resize: vertical;
+}
+
+.input-answer-container {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.input-answer-container input {
+    width: 80%;
+    height: auto;
+    resize: vertical;
+}
+
+.correctanswer-label {
+    margin-top: 15px;
+}
+
+.input-correctanswer {
+    margin-bottom: 15px;
+}
+
+.preview-sumbit {
+    margin-top: 20px;
+}
+
+.input-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+h1 {
+    margin-top: 0px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+h2 {
+    margin-top: -10px;
+    font-size: 18px;
+    font-weight: normal; 
+}

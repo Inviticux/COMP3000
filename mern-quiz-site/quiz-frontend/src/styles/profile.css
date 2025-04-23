@@ -1,0 +1,146 @@
+.profile-main {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 25px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info-modules {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-info-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.profile-name {
+    font-size: 24px;
+    margin: 0;
+}
+
+.profile-role {
+    font-size: 18px;
+    color: #666;
+    margin: 0;
+}
+
+.profile-modules-container {
+    margin-top: 5px;
+    width: 60%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-modules-container h2 {
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    font-family: lexend;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-module {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.profile-module-code {
+    padding: 10px;
+}
+
+.profile-module-info {
+    padding: 10px;
+    flex: 1;
+}
+
+.profile-module-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.profile-module-teacher {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.profile-controls {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.profile-controls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.profile-controls-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: -5px 0px 5px 0px;
+}
+
+.control-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #363434;
+    background-color: #C7E0FE;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.control-button:hover {
+    color: #E4E6E8;
+    background-color: #315E8B;
+}
+.control-button-delete {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #363434;
+    background-color: #F9B9B9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.control-button-delete:hover {
+    color: white;
+    background-color: #FB8B8B;
+}

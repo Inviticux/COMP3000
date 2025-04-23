@@ -112,15 +112,20 @@ router.put('/changename', async (req, res) => {
 
 //remove a user from the system
 router.delete('/deleteuser', async (req, res) => {
-    const { email } = req.body;
-    if (!email) {
-        return res.status(406).send('406-Not Acceptable: Missing Email');
+    const { email , confirmPassword } = req.body;
+    if (!email || !confirmPassword) {
+        return res.status(406).send('406-Not Acceptable: Missing Email or Password');
     }
     try {
         const result = await User.deleteOne({ email });
         if (result.deletedCount === 0) {
             return res.status(404).send('404-Not Found: User does not exist');
         }
+
+        if (result.password === confirmPassword) {
+            return res.status(401).send('401-Unauthorized: Incorrect Password');
+        }
+
         res.status(200).send(`200-OK: User "${email}" deleted`);
         console.log(`User "${email}" deleted`);
     } catch (error) {

@@ -61,6 +61,7 @@ const ModulePage = () => {
 
     //fetch user data on page load
     useEffect(() => {
+        setUserRole(localStorage.getItem('userRole'));
         setModuleCode(localStorage.getItem('selectedModuleCode'));
         setModuleTitle(localStorage.getItem('selectedModuleTitle'));
         setModuleTeacher(localStorage.getItem('selectedModuleTeacher'));

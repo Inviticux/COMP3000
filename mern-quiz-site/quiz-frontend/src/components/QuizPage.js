@@ -26,6 +26,7 @@ const QuizPage = () => {
 
     //fetch quiz data on page load
     useEffect(() => {
+        setUserRole(localStorage.getItem('userRole'));
         setCurrentQuiz(localStorage.getItem('selectedQuizID'));
         
         //get quiz data from api

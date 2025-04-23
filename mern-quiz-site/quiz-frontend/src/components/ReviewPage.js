@@ -11,12 +11,14 @@ const ReviewPage = () => {
     const [currentQuizID, setCurrentQuiz] = useState('');
     const [currentQuizTitle, setCurrentQuizTitle] = useState(''); 
     const [quizWeek , setQuizWeek] = useState('');
-    const [quizScore, setQuizScore] = useState('86');
+    const [quizScore, setQuizScore] = useState('');
     const [feedback, setFeedback] = useState('');
     const [currentQuestionID, setCurrentQuestionID] = useState('');
     const [currentQuestionNumb, setCurrentQuestionNumb] = useState('');
     const [currentQuestion, setCurrentQuestion] = useState('');
     const [currentAnswers, setCurrentAnswers] = useState([]);
+    const [correctAnswer, setCorrectAnswer] = useState('');
+    const [userAnswer, setUserAnswer] = useState('');
 
     //states for key array elements
     const [quizQuestionIDs, setQuizQuestionIDs] = useState([]);
@@ -26,6 +28,7 @@ const ReviewPage = () => {
 
     //fetch quiz data on page load
     useEffect(() => {
+        setUserRole(localStorage.getItem('userRole'));
         setCurrentQuiz(localStorage.getItem('selectedQuizID'));
         
         //get quiz data from api
@@ -65,6 +68,11 @@ const ReviewPage = () => {
 
     const fetchQuestionData = async (questionID) => {
         try {
+            //reset background colors at the start of a new fetchQuestionData request
+            document.querySelectorAll('.question-options p2').forEach(option => {
+                option.style.backgroundColor = '';
+            });
+
             const response = await fetch("http://localhost:82/api/attempt/reviewquestionattempt", {
                 method: "POST",
                 headers: {
@@ -77,10 +85,17 @@ const ReviewPage = () => {
             //update state with the fetched question data
             setCurrentQuestion(data.question);
             setCurrentAnswers(data.answers || []);
+            setCorrectAnswer(data.correctAnswer);
+            setUserAnswer(data.userAnswer);
 
-            //logic to set the colours of the items, corrent answer and users answer
+            //logic to change the background color of the options based on correctAnswer and userAnswer
+            if (data.correctAnswer && data.userAnswer) {
+                const correctOption = document.querySelector(`.question-option-${data.correctAnswer.toLowerCase()}`);
+                const userOption = document.querySelector(`.question-option-${data.userAnswer.toLowerCase()}`);
 
-
+                if (correctOption) correctOption.style.backgroundColor = '#CBE9A7'; // Green for correct answer
+                if (userOption && userOption !== correctOption) userOption.style.backgroundColor = '#F9B9B9'; // Red for wrong answer
+            }
 
         } catch (error) {
             console.error("Error fetching question data:", error);

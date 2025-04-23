@@ -84,4 +84,37 @@ router.post('/getquestion', async (req, res) => {
     }
 });
 
+//endpoint to get question info with correct answer for editing
+router.post('/retrievequestion', async (req, res) => {
+    const { questionID } = req.body;
+
+    // validate required fields
+    if (!questionID) {
+        return res.status(406).send('406-not acceptable: missing questionID');
+    }
+
+    try {
+        //find the question by questionID
+        const question = await Question.findOne({ questionID });
+        if (!question) {
+            return res.status(404).send('404-not found: question does not exist');
+        }
+
+        //return the question details excluding the correct answer
+        const questionDetails = {
+            questionID: question.questionID,
+            questionNumber: question.questionNumber,
+            question: question.question,
+            answers: question.answers,
+            correctAnswer: question.correctAnswer
+        };
+
+        res.status(200).json(questionDetails);
+        console.log(`returned full details for question "${questionID}"`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('500-internal server error');
+    }
+});
+
 module.exports = router;

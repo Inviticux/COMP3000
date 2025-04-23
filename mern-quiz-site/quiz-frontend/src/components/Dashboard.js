@@ -34,7 +34,9 @@ const Dashboard = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setUserRole(data.role);
+                    localStorage.setItem('userRole', data.role);
                     setUserName(data.name || 'User');
+                    localStorage.setItem('userName', data.name || 'User');
                     localStorage.setItem('userModules', JSON.stringify(data.modules || []));
                 } else {
                     console.error('Failed to fetch user data:', await response.text());

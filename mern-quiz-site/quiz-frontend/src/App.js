@@ -4,6 +4,8 @@ import Dashboard from "./components/Dashboard";
 import ModulePage from "./components/ModulePage";
 import QuizPage from "./components/QuizPage";
 import ReviewPage from "./components/ReviewPage";
+import Editor from "./components/Editor";
+import ProfilePage from "./components/ProfilePage";
 import './App.css';
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Route path='/module' element={<ModulePage />} />
         <Route path='/quiz' element={<QuizPage />} />
         <Route path='/review' element={<ReviewPage />} />
+        <Route path='/editor' element={<Editor />} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

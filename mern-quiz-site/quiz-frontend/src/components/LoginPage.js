@@ -74,6 +74,7 @@ const LoginPage = () => {
                     const data = await response.json();
                     //save the users email to use later
                     localStorage.setItem('userEmail', email);
+                    localStorage.setItem('userRole', isLecturer ? 'lecturer' : 'student');
                     setMessageState(data.message);
                     navigate('/dashboard');
                 } else {

@@ -109,7 +109,7 @@ router.post('/getmodulequizzes', async (req, res) => {
 
     try {
         //find quizzes by modulecode and year
-        const quizzes = await Quizzes.find({ modulecode, year }, 'quizID quizTitle week');
+        const quizzes = await Quizzes.find({ modulecode, year }, 'quizID quizTitle week quizQuestionIds');
         if (quizzes.length === 0) {
             return res.status(404).send('404-not found: no quizzes found for the given module and year');
         }
@@ -118,7 +118,8 @@ router.post('/getmodulequizzes', async (req, res) => {
         const quizArray = quizzes.map(quiz => ({
             quizID: quiz.quizID,
             title: quiz.quizTitle,
-            week: quiz.week
+            week: quiz.week,
+            questionIDs: quiz.quizQuestionIds
         }));
 
         res.status(200).json(quizArray);
