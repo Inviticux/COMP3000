@@ -148,14 +148,6 @@ router.post('/populate', async (req, res) => {
 
     await AttemptedQuiz.create([
       {
-        quizID: 'COMP3004-Q1',
-        email: user.email,
-        userScore: '41',
-        week: '1',
-        module: 'COMP3004',
-        year: '2025',
-      },
-      {
         quizID: 'LAW-0101-Q1',
         email: user.email,
         userScore: '19.2',
